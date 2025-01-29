@@ -1,18 +1,15 @@
--- Удаление старых таблиц, если они существуют
 DROP TABLE IF EXISTS Payments CASCADE;
 DROP TABLE IF EXISTS Rentals CASCADE;
 DROP TABLE IF EXISTS Cars CASCADE;
 DROP TABLE IF EXISTS Categories CASCADE;
 DROP TABLE IF EXISTS Users CASCADE;
 
--- Создание таблицы категорий
 CREATE TABLE Categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT
 );
 
--- Создание таблицы автомобилей
 CREATE TABLE Cars (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -22,7 +19,6 @@ CREATE TABLE Cars (
     availability BOOLEAN DEFAULT TRUE
 );
 
--- Создание таблицы пользователей
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -30,7 +26,6 @@ CREATE TABLE Users (
     phone VARCHAR(15)
 );
 
--- Создание таблицы аренды
 CREATE TABLE Rentals (
     id SERIAL PRIMARY KEY,
     car_id INTEGER REFERENCES Cars(id),
@@ -40,7 +35,6 @@ CREATE TABLE Rentals (
     total_price DECIMAL NOT NULL
 );
 
--- Создание таблицы платежей
 CREATE TABLE Payments (
     id SERIAL PRIMARY KEY,
     rental_id INTEGER REFERENCES Rentals(id),
@@ -49,7 +43,6 @@ CREATE TABLE Payments (
     payment_method VARCHAR(50)
 );
 
--- Вставка категорий
 INSERT INTO Categories (name, description) VALUES
 ('Sedan', 'Comfortable small cars'),
 ('SUV', 'Sport Utility Vehicles'),
@@ -57,7 +50,6 @@ INSERT INTO Categories (name, description) VALUES
 ('Convertible', 'Cars with a retractable roof'),
 ('Coupe', 'Two-door cars for a sporty feel');
 
--- Вставка 100 реальных автомобилей с различными годами и ценами в тенге (KZT)
 INSERT INTO Cars (name, model, category_id, price_per_day, availability) VALUES
 ('Toyota Corolla', '2021', 1, 16100, TRUE),
 ('Honda Civic', '2020', 1, 18400, TRUE),
