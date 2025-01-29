@@ -1,4 +1,3 @@
--- Создание таблицы пользователей
 CREATE TABLE IF NOT EXISTS Users (
     id SERIAL PRIMARY KEY,         -- Автоматически увеличиваемый уникальный идентификатор
     name VARCHAR(100) NOT NULL,    -- Имя пользователя
