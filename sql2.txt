@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS Users (
+    id SERIAL PRIMARY KEY,         -- Автоматически увеличиваемый уникальный идентификатор
+    name VARCHAR(100) NOT NULL,    -- Имя пользователя
+    email VARCHAR(100) UNIQUE NOT NULL, -- Уникальный email пользователя
+    phone VARCHAR(15) NOT NULL     -- Номер телефона пользователя
+);

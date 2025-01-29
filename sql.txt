@@ -1,0 +1,148 @@
+DROP TABLE IF EXISTS Payments CASCADE;
+DROP TABLE IF EXISTS Rentals CASCADE;
+DROP TABLE IF EXISTS Cars CASCADE;
+DROP TABLE IF EXISTS Categories CASCADE;
+DROP TABLE IF EXISTS Users CASCADE;
+
+CREATE TABLE Categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE Cars (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    model VARCHAR(100) NOT NULL,
+    category_id INTEGER REFERENCES Categories(id),
+    price_per_day DECIMAL NOT NULL,
+    availability BOOLEAN DEFAULT TRUE
+);
+
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15)
+);
+
+CREATE TABLE Rentals (
+    id SERIAL PRIMARY KEY,
+    car_id INTEGER REFERENCES Cars(id),
+    user_id INTEGER REFERENCES Users(id),
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    total_price DECIMAL NOT NULL
+);
+
+CREATE TABLE Payments (
+    id SERIAL PRIMARY KEY,
+    rental_id INTEGER REFERENCES Rentals(id),
+    payment_date DATE NOT NULL,
+    amount DECIMAL NOT NULL,
+    payment_method VARCHAR(50)
+);
+
+INSERT INTO Categories (name, description) VALUES
+('Sedan', 'Comfortable small cars'),
+('SUV', 'Sport Utility Vehicles'),
+('Truck', 'Large vehicles for heavy loads'),
+('Convertible', 'Cars with a retractable roof'),
+('Coupe', 'Two-door cars for a sporty feel');
+
+INSERT INTO Cars (name, model, category_id, price_per_day, availability) VALUES
+('Toyota Corolla', '2021', 1, 16100, TRUE),
+('Honda Civic', '2020', 1, 18400, TRUE),
+('Ford Mustang', '2022', 4, 32200, TRUE),
+('Chevrolet Silverado', '2021', 3, 36800, TRUE),
+('Tesla Model X', '2023', 2, 46000, TRUE),
+('BMW X5', '2021', 2, 41400, TRUE),
+('Mercedes-Benz G-Class', '2020', 2, 55200, TRUE),
+('Porsche 911', '2022', 4, 69000, TRUE),
+('Nissan Rogue', '2023', 2, 27600, TRUE),
+('Chevrolet Camaro', '2022', 4, 34500, TRUE),
+('Audi A4', '2021', 1, 23000, TRUE),
+('Hyundai Elantra', '2021', 1, 20700, TRUE),
+('Toyota Highlander', '2020', 2, 32200, TRUE),
+('BMW 3 Series', '2022', 1, 25300, TRUE),
+('Honda CR-V', '2021', 2, 29900, TRUE),
+('Ford F-150', '2021', 3, 39100, TRUE),
+('Jeep Wrangler', '2020', 2, 43700, TRUE),
+('Mazda CX-5', '2023', 2, 27600, TRUE),
+('Chevrolet Traverse', '2022', 2, 34500, TRUE),
+('Ram 1500', '2021', 3, 36800, TRUE),
+('Volkswagen Tiguan', '2020', 2, 29900, TRUE),
+('Honda Accord', '2022', 1, 23000, TRUE),
+('Nissan Altima', '2023', 1, 20700, TRUE),
+('Subaru Outback', '2021', 2, 32200, TRUE),
+('Toyota Tacoma', '2020', 3, 39100, TRUE),
+('Ford Explorer', '2021', 2, 34500, TRUE),
+('Kia Sorento', '2022', 2, 32200, TRUE),
+('Chevrolet Equinox', '2020', 2, 29900, TRUE),
+('Hyundai Kona', '2023', 2, 25300, TRUE),
+('BMW X3', '2022', 2, 36800, TRUE),
+('Jeep Grand Cherokee', '2021', 2, 43700, TRUE),
+('Tesla Model 3', '2023', 1, 27600, TRUE),
+('Audi Q5', '2020', 2, 39100, TRUE),
+('Toyota Tundra', '2022', 3, 46000, TRUE),
+('Ford Mustang GT', '2021', 4, 55200, TRUE),
+('Chevrolet Malibu', '2022', 1, 23000, TRUE),
+('Honda Pilot', '2021', 2, 34500, TRUE),
+('Volkswagen Jetta', '2020', 1, 20700, TRUE),
+('Subaru Forester', '2021', 2, 29900, TRUE),
+('Mazda 6', '2022', 1, 25300, TRUE),
+('Hyundai Santa Fe', '2021', 2, 32200, TRUE),
+('Kia Sportage', '2020', 2, 27600, TRUE),
+('Chevrolet Bolt EV', '2021', 1, 23000, TRUE),
+('Tesla Model S', '2023', 1, 50600, TRUE),
+('Ford Bronco', '2021', 2, 43700, TRUE),
+('Jeep Compass', '2020', 2, 34500, TRUE),
+('Ram 2500', '2022', 3, 52900, TRUE),
+('Nissan Frontier', '2021', 3, 36800, TRUE),
+('BMW M5', '2021', 4, 69000, TRUE),
+('Mercedes-Benz E-Class', '2022', 1, 41400, TRUE),
+('Audi A6', '2023', 1, 46000, TRUE),
+('Toyota Sienna', '2020', 2, 36800, TRUE),
+('Honda Odyssey', '2021', 2, 32200, TRUE),
+('Chevrolet Bolt', '2023', 1, 27600, TRUE),
+('Ford Escape', '2022', 2, 29900, TRUE),
+('Mazda CX-30', '2021', 2, 27600, TRUE),
+('Kia Telluride', '2023', 2, 41400, TRUE),
+('Tesla Model Y', '2021', 2, 46000, TRUE),
+('Hyundai Palisade', '2022', 2, 39100, TRUE),
+('Chevrolet Suburban', '2020', 2, 50700, TRUE),
+('Nissan Murano', '2023', 2, 34500, TRUE),
+('BMW X7', '2022', 2, 55200, TRUE),
+('Ford Ranger', '2021', 3, 29900, TRUE),
+('GMC Sierra', '2021', 3, 39100, TRUE),
+('Chevrolet Colorado', '2022', 3, 36800, TRUE),
+('Ram 3500', '2023', 3, 55200, TRUE),
+('Honda HR-V', '2020', 2, 25300, TRUE),
+('Subaru Crosstrek', '2022', 2, 27600, TRUE),
+('Toyota RAV4', '2023', 2, 29900, TRUE),
+('Hyundai Tucson', '2022', 2, 32200, TRUE),
+('Ford Fusion', '2020', 1, 23000, TRUE),
+('Chevrolet Impala', '2021', 1, 25300, TRUE),
+('Tesla Cybertruck', '2023', 3, 69000, TRUE),
+('Jeep Renegade', '2022', 2, 27600, TRUE),
+('Nissan Leaf', '2021', 1, 20700, TRUE),
+('BMW Z4', '2022', 4, 50600, TRUE),
+('Chevrolet Corvette', '2021', 4, 69000, TRUE),
+('Ford Expedition', '2022', 2, 43700, TRUE),
+('Ram 1500 TRX', '2023', 3, 57500, TRUE),
+('GMC Yukon', '2022', 2, 46000, TRUE),
+('Toyota Land Cruiser', '2021', 2, 55200, TRUE),
+('Kia Stinger', '2023', 1, 34500, TRUE),
+('Honda CR-V Hybrid', '2022', 2, 39100, TRUE),
+('Nissan Pathfinder', '2021', 2, 41400, TRUE),
+('BMW iX', '2023', 2, 69000, TRUE),
+('Chevrolet Blazer', '2020', 2, 34500, TRUE),
+('Audi Q7', '2022', 2, 46000, TRUE),
+('Toyota 4Runner', '2021', 2, 46000, TRUE),
+('Subaru Ascent', '2023', 2, 41400, TRUE),
+('Hyundai Ioniq 5', '2023', 1, 39100, TRUE),
+('Porsche Taycan', '2021', 1, 69000, TRUE),
+('Ford F-250', '2022', 3, 50700, TRUE),
+('Ram 1500 Classic', '2021', 3, 46000, TRUE),
+('Chevrolet Express', '2021', 3, 43700, TRUE),
+('GMC Canyon', '2020', 3, 36800, TRUE);
